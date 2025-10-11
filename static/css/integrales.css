@@ -1,0 +1,210 @@
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+
+/* Fondo general */
+body {
+  background-image: url("../img/fondo.jpeg");
+  background-size: cover;               /* cubre toda la pantalla */
+  background-position: center center;   /* centrado */
+  background-attachment: fixed;         /* evita que se mueva o se vuelva blanco al hacer zoom */
+  background-repeat: no-repeat;
+  background-color: #000;               /* fondo negro de respaldo */
+  min-height: 100vh;                    /* ocupa toda la altura visible */
+  color: #fff;
+}
+
+/* Sección central superior (hero) */
+.hero {
+  text-align: center;
+  margin-bottom: 30px; /* espacio debajo de la imagen */
+  position: relative;
+}
+.hero h1 {
+  color: #fff;
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 16px; /* separa el título de la imagen */
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+}
+.hero img {
+  width: 500px;
+  max-width: 80%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+}
+@media (max-width: 768px) {
+  .hero h1 { font-size: 28px; }
+}
+
+/* Header */
+header {
+  text-align: center;
+  padding: 24px 12px;
+  color: #fff;
+  background: rgba(0,0,0,0.2);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+header h1 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+/* Layout */
+.main {
+  display: flex;
+  gap: 24px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: flex-start;
+}
+
+/* Card */
+.card {
+  background: #2c2c2c;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.4);
+  transition: transform 0.2s ease;
+}
+.card:hover { transform: translateY(-3px); }
+
+/* Calculadora izquierda */
+.left { width: 420px; min-width: 320px; }
+.calc-title { color: #fff; font-weight: 700; margin-bottom: 10px; font-size: 18px; }
+
+/* Input de función */
+.expr-wrap { display:flex; gap:12px; align-items:center; }
+#expr {
+  flex: 1;
+  padding: 12px 14px;
+  font-size: 18px;
+  border-radius: 10px;
+  border: 1px solid #444;
+  background: #3a3a3a;
+  color: #fff;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.3);
+}
+
+/* Teclado */
+.teclado { margin-top: 14px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+.tecla {
+  border: none;
+  padding: 14px 8px;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+/* Números: amarillo */
+.tecla:not(.operator):not(.func) {
+  background: #ffd700;
+  color: #1a1a1a;
+}
+.tecla:not(.operator):not(.func):hover { background: #e6c200; }
+/* Operadores: azul */
+.tecla.operator {
+  background: #1e90ff;
+  color: #fff;
+}
+.tecla.operator:hover { background: #0d75d8; }
+/* Funciones: azul oscuro */
+.tecla.func {
+  background: #0074cc;
+  color: #fff;
+}
+.tecla.func:hover { background: #005fa3; }
+.tecla.wide { grid-column: span 2; }
+
+/* Botones pequeños (clear, etc.) */
+.small-btn {
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: none;
+  background: #ffd700;
+  color: #1a1a1a;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.small-btn:hover { background: #e6c200; }
+
+/* Límites */
+.limites input {
+  padding: 10px;
+  border-radius:10px;
+  border:1px solid #555;
+  width:100%;
+  background: #3a3a3a;
+  color: #fff;
+}
+label.small { font-size: 12px; color: #ccc; display:block; margin-bottom:6px; }
+
+/* Botón calcular */
+#btnCalc {
+  margin-top: 16px;
+  width: 100%;
+  padding: 14px;
+  border-radius:12px;
+  border:none;
+  background: #1e90ff;
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#btnCalc:hover { background: #0d75d8; }
+
+/* Resultado */
+.salida {
+  margin-top: 16px;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+}
+.salida small {
+  display:block;
+  margin-top:8px;
+  color:#fff;
+  font-weight:700;
+}
+
+/* Panel derecho */
+.right { flex: 1 1 0%; }
+.grafico-card { margin-bottom: 20px; }
+.grafico-title { 
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 10px; 
+  font-size: 16px; 
+}
+.plot-area {
+  height: 340px; min-height: 260px;
+  border-radius: 12px;
+  background: #1a1a1a;
+  box-shadow: inset 0 4px 12px rgba(0,0,0,0.5);
+}
+
+/* Footer */
+footer {
+  margin-top: 18px;
+  color: #fff;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 700;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+}
+
+/* Responsive */
+@media (max-width: 920px) {
+  .main { flex-direction: column; padding: 12px; }
+  .left { width: 100%; }
+  .right { width: 100%; }
+}

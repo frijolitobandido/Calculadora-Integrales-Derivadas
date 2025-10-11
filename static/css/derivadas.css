@@ -1,0 +1,268 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #0d1117;
+    color: #fff;
+}
+
+/* --- TÍTULO PRINCIPAL --- */
+h1 {
+  text-align: center;
+  color: #fff;
+  font-size: 40px;          /* tamaño igual al de integrales */
+  font-weight: 700;         /* negrita igual */
+  margin-top: 20px;         /* separación superior */
+  margin-bottom: 20px;      /* separación inferior */
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.7); /* sombra igual */
+}
+
+/* --- CONTENEDOR PRINCIPAL --- */
+.container {
+  display: grid;
+  grid-template-columns: 600px 600px;
+  justify-content: center;
+  align-items: start;
+  gap: 40px;
+  padding: 130px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* --- PANEL IZQUIERDO (CALCULADORA) --- */
+.calculator-panel {
+    background-color: #161b22;
+    padding: 40px 50px;
+    border-radius: 50px;
+    box-shadow: 0 0 30px rgba(255,255,255,0.05);
+    width: 600px;
+    height: 700px; /* 🔒 altura fija */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+h2 {
+    margin-top: 0;
+    color: #00bfff;
+    text-align: center;
+}
+
+/* --- Input principal --- */
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.input-group input {
+    flex: 1;
+    padding: 10px;
+    background-color: #0d1117;
+    border: 1px solid #00bfff;
+    color: white;
+    border-radius: 6px;
+}
+
+.input-group button {
+    background-color: #00bfff;
+    border: none;
+    padding: 10px 15px;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* --- CONTENEDOR DE BOTONES --- */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex-grow: 1;
+}
+
+/* --- CUADRÍCULA DE BOTONES --- */
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 10px; /* 🔥 menor separación */
+    flex-grow: 0;
+}
+
+.button-grid button {
+    padding: 14px;
+    font-size: 16px;
+    background-color: #212738;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.button-grid button:hover {
+    background-color: #00bfff;
+}
+
+/* --- BOTÓN DE DERIVAR --- */
+#derivarBtn {
+    width: 100%;
+    padding: 14px;
+    font-size: 17px;
+    background-color: #00bfff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px; /* 🔥 más cerca de los botones */
+}
+
+#derivarBtn:hover {
+    background-color: #0099cc;
+}
+
+/* --- PANEL DERECHO (GRÁFICO) --- */
+.graph-panel {
+  background-color: #161b22;
+  padding: 40px;
+  border-radius: 30px;
+  box-shadow: 0 0 30px rgba(255,255,255,0.05);
+  width: 600px;
+  min-height: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+/* --- RESULTADOS DE TEXTO --- */
+.output {
+    margin-top: 25px;
+    margin-bottom: 30px;
+    background-color: #0f1923;
+    border: 1px solid #00bfff;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.output strong {
+    color: #00ffcc;
+    display: block;
+    margin-bottom: 5px;
+}
+
+#resultado {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* --- ÁREA DEL GRÁFICO --- */
+#grafico-container {
+  width: 100%;
+  height: 400px; /* 🔒 altura fija */
+  background-color: #0d1117;
+  border: 2px solid #00bfff; /* 🔥 visible siempre */
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0,191,255,0.3);
+  margin-top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+#grafico-container::before {
+  content: "Aquí se mostrará la gráfica de f(x) y f'(x)";
+  color: #999;
+  font-size: 16px;
+  font-style: italic;
+}
+
+/* --- IMAGEN DEL GRÁFICO --- */
+.graph-output {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.graph-output img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    background-color: #000;
+}
+
+button:focus,
+input:focus {
+    outline: none;
+    box-shadow: 0 0 5px #00bfff;
+}
+
+/* --- BOTÓN DE CALCULADORA DE INTEGRALES --- */
+#btnIntegrales {
+    padding: 14px 24px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 12px;
+    border: none;
+    background-color: #1e90ff;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    display: inline-block;
+}
+
+#btnIntegrales:hover {
+    background-color: #0d75d8;
+    transform: scale(1.05);
+}
+
+footer {
+  margin-top: 18px;
+  color: #fff;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 700;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+}
+
+/* --- RESPONSIVE --- */
+@media screen and (max-width: 900px) {
+    .container {
+        grid-template-columns: 1fr;
+        justify-content: center;
+        align-items: center;
+        padding: 60px 20px;
+    }
+
+    .calculator-panel {
+        width: 350px;
+        height: 520px;
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .graph-panel {
+        width: 350px;
+        min-height: 520px;
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    #grafico-container {
+        height: 300px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+}

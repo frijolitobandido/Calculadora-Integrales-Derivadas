@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculadora de Derivadas</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/derivadas.css') }}">
+</head>
+<body style="background-image: url('{{ url_for('static', filename='img/fondo.jpeg') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <h1>Calculadora de Derivadas</h1>
+    <div class="container">
+        <div class="calculator-panel">
+            <h2>Calculadora científica</h2>
+            <div class="input-group">
+                <input type="text" id="funcionInput" placeholder="Ej: x**2 + sin(x)">
+                <button id="limpiar">Limpiar</button>
+                <button id="retroceso">←</button>
+            </div>
+
+            <div class="button-grid">
+                <button>sin(</button><button>cos(</button><button>tan(</button><button>ln(</button><button>√(</button>
+                <button>7</button><button>8</button><button>9</button><button>π</button><button>/</button>
+                <button>4</button><button>5</button><button>6</button><button>e</button><button>*</button>
+                <button>1</button><button>2</button><button>3</button><button>x</button><button>-</button>
+                <button>0</button><button>.</button><button>(</button><button>)</button><button>+</button>
+            </div>
+
+            <button id="derivarBtn">Derivar</button>
+        </div>
+
+        <div class="graph-panel">
+            <h2>Gráfico de f(x) y f'(x)</h2>
+            <div class="output" id="resultado"></div>
+            <div id="grafico" class="graph-output"></div>
+        </div>
+    </div>
+
+    <!-- Botón para volver a integrales -->
+    <div style="text-align:center; margin:30px 0;">
+        <button id="btnIntegrales" style="
+            padding: 14px 24px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 12px;
+            border: none;
+            background-color: #1e90ff;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.2s;"
+            onmouseover="this.style.backgroundColor='#0d75d8';" 
+            onmouseout="this.style.backgroundColor='#1e90ff';"
+            onclick="window.location.href='{{ url_for('index_integrales') }}';">
+            Calculadora de integrales
+        </button>
+
+        <button id="btnEDO" style="
+        padding: 14px 24px;
+        font-size: 16px;
+        font-weight: 700;
+        border-radius: 12px;
+        border: none;
+        background-color: #1e90ff;
+        color: #fff;
+        cursor: pointer;
+        transition: background 0.2s;"
+        onmouseover="this.style.backgroundColor='#0d75d8';" 
+        onmouseout="this.style.backgroundColor='#1e90ff';"
+        onclick="#">
+     Ecuaciones diferenciales
+    </button>
+    </div>
+
+    <script>
+    // Insertar texto desde botones
+    document.querySelectorAll('.button-grid button').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const input = document.getElementById('funcionInput');
+            input.value += btn.textContent === 'π' ? 'pi' :
+                           btn.textContent === 'e' ? 'E' :
+                           btn.textContent === '√(' ? 'sqrt(' :
+                           btn.textContent;
+            input.focus();
+        });
+    });
+
+    // Limpiar todo
+    document.getElementById('limpiar').addEventListener('click', () => {
+        document.getElementById('funcionInput').value = '';
+        document.getElementById('resultado').innerHTML = '';
+        document.getElementById('grafico').innerHTML = '';
+    });
+
+    // Retroceso ←
+    document.getElementById('retroceso').addEventListener('click', () => {
+        const input = document.getElementById('funcionInput');
+        input.value = input.value.slice(0, -1);
+        input.focus();
+    });
+
+    // Calcular derivada
+    document.getElementById('derivarBtn').addEventListener('click', () => {
+        const funcion = document.getElementById('funcionInput').value;
+
+        fetch('/derivar', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ funcion })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.error) {
+                document.getElementById('resultado').innerHTML = `⚠️ ${data.error}`;
+                document.getElementById('grafico').innerHTML = '';
+            } else {
+                document.getElementById('resultado').innerHTML = `
+                    <strong>f(x):</strong> ${data.funcion}<br>
+                    <strong>f'(x):</strong> ${data.derivada}
+                `;
+                document.getElementById('grafico').innerHTML = `
+                    <img src="data:image/png;base64,${data.grafico}" alt="Gráfico de la función y su derivada">
+                `;
+            }
+        })
+        .catch(err => {
+            document.getElementById('resultado').innerHTML = '⚠️ Error al conectar con el servidor.';
+            document.getElementById('grafico').innerHTML = '';
+        });
+    });
+</script>
+
+    <footer>
+        <p>&copy; 2025 Calculadora de Derivadas | Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

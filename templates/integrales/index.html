@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Calculadora de Integrales Definidas</title>
+
+  <!-- Librerías externas -->
+  <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.9.0/plotly.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/integrales.css') }}">
+</head>
+<body style="background-image: url('{{ url_for('static', filename='img/fondo.jpeg') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <div class="hero">
+      <h1>Proyecto Final Cálculo II</h1>
+      <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Imagen Central">
+    </div>
+
+  <header>
+    <h1>Calculadora de Integrales Definidas</h1>
+  </header>
+
+  <main class="main">
+    <!-- IZQUIERDA -->
+    <section class="left card" aria-label="Calculadora de integrales">
+      <div class="calc-title">Calculadora científica</div>
+
+      <div class="expr-wrap">
+        <input id="expr" aria-label="Función f(x)" placeholder="Ej: x^2 + 3*x - 5" spellcheck="false">
+        <button id="btnClear" class="small-btn" title="Limpiar">Limpiar</button>
+      </div>
+
+      <div class="teclado" role="group" aria-label="Teclado de la calculadora">
+        <!-- fila 1 -->
+        <button class="tecla func" data-val="sin(">sin</button>
+        <button class="tecla func" data-val="cos(">cos</button>
+        <button class="tecla func" data-val="tan(">tan</button>
+        <button class="tecla func" data-val="ln(">ln</button>
+        <button class="tecla func" data-val="sqrt(">√</button>
+
+        <!-- fila 2 -->
+        <button class="tecla" data-val="7">7</button>
+        <button class="tecla" data-val="8">8</button>
+        <button class="tecla" data-val="9">9</button>
+        <button class="tecla operator" data-val="/">÷</button>
+        <button class="tecla func" data-val="pi">π</button>
+
+        <!-- fila 3 -->
+        <button class="tecla" data-val="4">4</button>
+        <button class="tecla" data-val="5">5</button>
+        <button class="tecla" data-val="6">6</button>
+        <button class="tecla operator" data-val="*">×</button>
+        <button class="tecla func" data-val="e">e</button>
+
+        <!-- fila 4 -->
+        <button class="tecla" data-val="1">1</button>
+        <button class="tecla" data-val="2">2</button>
+        <button class="tecla" data-val="3">3</button>
+        <button class="tecla operator" data-val="-">−</button>
+        <button class="tecla func" data-val="^">^</button>
+
+        <!-- fila 5 -->
+        <button class="tecla wide" data-val="0">0</button>
+        <button class="tecla" data-val=".">.</button>
+        <button class="tecla" data-val="(">(</button>
+        <button class="tecla" data-val=")">)</button>
+        <button class="tecla operator" id="btnDel">⌫</button>
+      </div>
+
+      <!-- Límites -->
+      <div style="display:flex; gap:12px; margin-top:12px;">
+        <div style="flex:1">
+          <label class="small">Límite inferior (a)</label>
+          <input id="limA" type="number" step="any" value="0">
+        </div>
+        <div style="flex:1">
+          <label class="small">Límite superior (b)</label>
+          <input id="limB" type="number" step="any" value="1">
+        </div>
+      </div>
+
+      <!-- Precisión -->
+      <div style="display:flex; gap:8px; margin-top:12px; align-items:center;">
+        <label class="small" style="margin:0; min-width:120px;">Precisión (n muestras)</label>
+        <input id="nSamples" type="number" min="10" step="1" value="400">
+      </div>
+
+      <button id="btnCalc">Calcular Integral</button>
+
+      <div class="salida" id="resultado">
+        <div id="resMain">∫[a,b] f(x) dx = <strong>---</strong></div>
+        <small id="resDetail">Ingrese una función y presione Calcular</small>
+      </div>
+    </section>
+
+    <!-- DERECHA -->
+    <section class="right">
+      <div class="grafico-card card">
+        <div class="grafico-title">Área bajo la curva (2D)</div>
+        <div id="plot2d" class="plot-area"></div>
+      </div>
+
+      <div class="grafico-card card">
+        <div class="grafico-title">Volumen rotado (3D) alrededor del eje X</div>
+        <div id="plot3d" class="plot-area"></div>
+      </div>
+    </section>
+  </main>
+
+ <!-- Botones de navegación -->
+<div style="text-align:center; margin:30px 0;">
+    <button id="btnDerivadas" style="
+        padding: 14px 24px;
+        font-size: 16px;
+        font-weight: 700;
+        border-radius: 12px;
+        border: none;
+        background-color: #1e90ff;
+        color: #fff;
+        cursor: pointer;
+        transition: background 0.2s;"
+        onmouseover="this.style.backgroundColor='#0d75d8';" 
+        onmouseout="this.style.backgroundColor='#1e90ff';"
+        onclick="window.location.href='{{ url_for('index_derivadas') }}';">
+    Calculadora de derivadas
+    </button>
+
+    <button id="btnEDO" style="
+        padding: 14px 24px;
+        font-size: 16px;
+        font-weight: 700;
+        border-radius: 12px;
+        border: none;
+        background-color: #1e90ff;
+        color: #fff;
+        cursor: pointer;
+        transition: background 0.2s;"
+        onmouseover="this.style.backgroundColor='#0d75d8';" 
+        onmouseout="this.style.backgroundColor='#1e90ff';"
+        onclick="#">
+     Ecuaciones diferenciales
+    </button>
+</div>
+  <script src="{{ url_for('static', filename='js/integrales.js') }}"></script>
+  <footer>
+    <p>&copy; 2025 Proyecto Cálculo II | Todos los derechos reservados.</p>
+  </footer>
+</body>
+</html>
